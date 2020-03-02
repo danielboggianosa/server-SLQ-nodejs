@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("../models/User"));
+const User_1 = __importDefault(require("../Models/User"));
 const Sequelize = require('sequelize');
 class UsersContuserler {
     //CREATE
@@ -111,31 +111,6 @@ class UsersContuserler {
             yield User_1.default.findAll({
                 where,
                 order: [[field, order]],
-                offset: page,
-                limit: size
-            })
-                .then((users) => {
-                // console.log("All users:",total);
-                res.json({ data: users, total: total });
-            });
-        });
-    }
-    // LISTAR CON FILTRADO
-    listFiltered(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { Op } = require('sequelize');
-            const { page, size, value } = req.body;
-            const where = {
-                [Op.or]: [
-                    { id: { [Op.substring]: value } },
-                    { nombre: { [Op.substring]: value } },
-                    { apellido: { [Op.substring]: value } },
-                    { correo: { [Op.substring]: value } }
-                ]
-            };
-            let total = yield User_1.default.count({ where });
-            yield User_1.default.findAll({
-                where,
                 offset: page,
                 limit: size
             })

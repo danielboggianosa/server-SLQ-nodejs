@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../database/connection"));
-const Rol_1 = __importDefault(require("../models/Rol"));
+const Rol_1 = __importDefault(require("./Rol"));
 const Sequelize = require('sequelize');
 const Model = Sequelize.Model;
 class User extends Model {

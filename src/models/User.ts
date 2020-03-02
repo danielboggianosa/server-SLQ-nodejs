@@ -1,6 +1,5 @@
 import sequelize from '../database/connection';
-import Rol from '../models/Rol';
-import Phone from './Phone';
+import Rol from './Rol';
 const Sequelize = require('sequelize');
 const Model = Sequelize.Model;
 

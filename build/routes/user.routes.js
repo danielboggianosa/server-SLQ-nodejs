@@ -13,7 +13,6 @@ class UsersRoutes {
     config() {
         this.router.post('/', user_controller_1.default.create);
         this.router.post('/paged', user_controller_1.default.listPaged);
-        this.router.post('/filtered', user_controller_1.default.listFiltered);
         this.router.get('/', user_controller_1.default.list);
         this.router.get('/:id', user_controller_1.default.getOne);
         this.router.delete('/:id', user_controller_1.default.delete);

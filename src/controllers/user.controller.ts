@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from '../models/User';
+import User from '../Models/User';
 const Sequelize = require('sequelize');
 
 class UsersContuserler {
@@ -98,31 +98,6 @@ class UsersContuserler {
         await User.findAll({
             where,
             order:[ [field, order] ],
-            offset: page, 
-            limit: size
-        })
-        .then(
-            (users:any) => {
-                // console.log("All users:",total);
-                res.json({data: users, total: total});
-            }
-        );
-    }
-    // LISTAR CON FILTRADO
-    public async listFiltered (req: Request, res: Response): Promise<any> {
-        const { Op } = require('sequelize');
-        const {page, size, value} = req.body;
-        const where = {
-            [Op.or]: [
-                { id: { [Op.substring]: value } },
-                { nombre: { [Op.substring]: value } },
-                { apellido: { [Op.substring]: value } },
-                { correo: { [Op.substring]: value } }
-              ]
-        }
-        let total= await User.count({where});
-        await User.findAll({
-            where,
             offset: page, 
             limit: size
         })

@@ -12,7 +12,6 @@ class UsersRoutes {
     config(): void {
         this.router.post('/', usersController.create);
         this.router.post('/paged', usersController.listPaged);
-        this.router.post('/filtered', usersController.listFiltered);
         this.router.get('/', usersController.list);
         this.router.get('/:id', usersController.getOne);
         this.router.delete('/:id', usersController.delete);
