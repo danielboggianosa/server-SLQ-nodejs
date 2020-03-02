@@ -1,15 +1,20 @@
 import { Request, Response } from 'express';
-import User from '../Models/User';
-import Phone from '../Models/Phone';
-import Rol from '../Models/Rol';
-import sequelize from '../database/connection';
+import User from '../models/User';
+import Rol from '../models/Rol';
+import Phone from '../models/Phone';
+const Sequelize = require('sequelize');
 
 class UsersContuserler {
     
     //CREATE
     public async create (req: Request, res: Response): Promise<void> {
         // console.log(req.body);
-        await User.create(req.body)
+        await User.create(req.body
+          // { include: [{
+          //   model: Rol,
+          //   as: 'user_rol',
+          // }], }
+        )
           .then((user:any) => {
             console.log("User creado con ID:", user.id);
             res.json({msg: 'User creado exitosamente', data: user});
@@ -77,10 +82,24 @@ class UsersContuserler {
 
     // LISTAR CON PAGINADO
     public async listPaged (req: Request, res: Response): Promise<any> {
-        const {page, size,} = req.body;
-        let total= await User.count();
+        const {page, size, field, order, value} = req.body;
+        const { Op } = require('sequelize');
+        // console.log(req.body);
+        var where=null;
+        if(value){
+          where = {
+            [Op.or]: [
+                { id: { [Op.substring]: value } },
+                { nombre: { [Op.substring]: value } },
+                { apellido: { [Op.substring]: value } },
+                { correo: { [Op.substring]: value } }
+              ]
+          }
+        }
+        let total = await User.count({where});
         await User.findAll({
-            order:[ ['createdAt', 'DESC'] ],
+            where,
+            order:[ [field, order] ],
             offset: page, 
             limit: size
         })

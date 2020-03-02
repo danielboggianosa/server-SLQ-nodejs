@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../database/connection"));
-const Rol_1 = __importDefault(require("./Rol"));
+const Rol_1 = __importDefault(require("../models/Rol"));
 const Sequelize = require('sequelize');
 const Model = Sequelize.Model;
 class User extends Model {
@@ -35,4 +35,7 @@ User.init({
         }
     }
 }, { indexes: [{ unique: true, fields: ['correo'] }], sequelize: connection_1.default, modelName: 'sq_users' });
-Rol_1.default.hasOne(User, { as: 'rol', foreignKey: 'rol' });
+Rol_1.default.hasOne(User, { as: 'user' });
+// User.belongsTo(Rol, {as: 'user_rol', foreignKey: 'id'})
+// Phone.belongsTo(User, {as: "phone", foreignKey: 'id'})
+// User.hasOne(Phone, {as: 'user_phone'})

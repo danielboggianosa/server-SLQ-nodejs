@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Phone from '../Models/Phone';
+import Phone from '../models/Phone';
 
 class PhonesContphoneler {
     

@@ -12,13 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("../Models/User"));
+const User_1 = __importDefault(require("../models/User"));
+const Sequelize = require('sequelize');
 class UsersContuserler {
     //CREATE
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             // console.log(req.body);
-            yield User_1.default.create(req.body)
+            yield User_1.default.create(req.body
+            // { include: [{
+            //   model: Rol,
+            //   as: 'user_rol',
+            // }], }
+            )
                 .then((user) => {
                 console.log("User creado con ID:", user.id);
                 res.json({ msg: 'User creado exitosamente', data: user });
@@ -87,10 +93,24 @@ class UsersContuserler {
     // LISTAR CON PAGINADO
     listPaged(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { page, size, } = req.body;
-            let total = yield User_1.default.count();
+            const { page, size, field, order, value } = req.body;
+            const { Op } = require('sequelize');
+            // console.log(req.body);
+            var where = null;
+            if (value) {
+                where = {
+                    [Op.or]: [
+                        { id: { [Op.substring]: value } },
+                        { nombre: { [Op.substring]: value } },
+                        { apellido: { [Op.substring]: value } },
+                        { correo: { [Op.substring]: value } }
+                    ]
+                };
+            }
+            let total = yield User_1.default.count({ where });
             yield User_1.default.findAll({
-                order: [['createdAt', 'DESC']],
+                where,
+                order: [[field, order]],
                 offset: page,
                 limit: size
             })
