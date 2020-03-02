@@ -1,5 +1,5 @@
 import sequelize from '../database/connection';
-import User from '../models/User';
+import User from '../Models/User';
 const Sequelize = require('sequelize');
 const Model = Sequelize.Model;
 

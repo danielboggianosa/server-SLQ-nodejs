@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Rol from '../models/Rol';
+import Rol from '../Models/Rol';
 
 class RolsController {
     

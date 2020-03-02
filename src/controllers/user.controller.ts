@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
-import Rol from '../models/Rol';
-import Phone from '../models/Phone';
 const Sequelize = require('sequelize');
 
 class UsersContuserler {
