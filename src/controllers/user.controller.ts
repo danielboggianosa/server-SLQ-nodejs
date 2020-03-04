@@ -79,8 +79,8 @@ class UsersContuserler {
     }
 
     // LISTAR CON PAGINADO
-    public async listPaged (req: Request, res: Response): Promise<any> {
-        const {page, size, field, order, value} = req.body;
+    public async getList (req: Request, res: Response): Promise<any> {
+        const {page, size, field, order, value, attributes} = req.body;
         const { Op } = require('sequelize');
         // console.log(req.body);
         var where=null;
@@ -96,6 +96,7 @@ class UsersContuserler {
         }
         let total = await User.count({where});
         await User.findAll({
+            attributes: attributes,
             where,
             order:[ [field, order] ],
             offset: page, 

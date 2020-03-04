@@ -91,9 +91,9 @@ class UsersContuserler {
         });
     }
     // LISTAR CON PAGINADO
-    listPaged(req, res) {
+    getList(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { page, size, field, order, value } = req.body;
+            const { page, size, field, order, value, attributes } = req.body;
             const { Op } = require('sequelize');
             // console.log(req.body);
             var where = null;
@@ -109,6 +109,7 @@ class UsersContuserler {
             }
             let total = yield User_1.default.count({ where });
             yield User_1.default.findAll({
+                attributes: attributes,
                 where,
                 order: [[field, order]],
                 offset: page,
